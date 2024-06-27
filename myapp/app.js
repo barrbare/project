@@ -10,6 +10,7 @@ var studentsRouter = require('./routes/students');
 var professorsRouter = require('./routes/professors');
 var staffRouter = require('./routes/staff');
 var courseRouter = require('./routes/courses');
+var departmentRouter = require('./routes/department');
 
 
 var app = express();
@@ -30,6 +31,7 @@ app.use('/students', studentsRouter);
 app.use('/professors', professorsRouter);
 app.use('/staff', staffRouter);
 app.use('/course', courseRouter);
+app.use('/department', departmentRouter);
 
 
 

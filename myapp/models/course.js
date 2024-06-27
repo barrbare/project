@@ -6,7 +6,7 @@ const courseSchema = new mongoose.Schema({
     students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }],
     professor: { type: mongoose.Schema.Types.ObjectId, ref: 'Professor'}, 
 }, {
-    collection: 'staff',
+    collection: 'course',
     timestamps: true,
     read: 'nearest',
     writeConcern: {
