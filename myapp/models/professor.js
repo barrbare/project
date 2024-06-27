@@ -5,11 +5,12 @@ const professorSchema = new mongoose.Schema({
     lastName: { type: String, required: true },
     dob: { type: Date },
     email: { type: String, required: true, unique: true },
-    department: { type: String, required: true },
+    department: { type: String, required: true }, //add
     subjectsTaught: [{
         code: { type: String },
         name: { type: String }
-    }]
+    }],
+    courses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }]
 }, {
     collection: 'professors',  
     timestamps: true,           
