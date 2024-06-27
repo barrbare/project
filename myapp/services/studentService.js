@@ -1,8 +1,10 @@
 const StudentModel = require('../models/student');
+const CourseModel = require('../models/course');
 
 module.exports = {
     getAll: (req, res) => {
         StudentModel.find({})
+            .populate('courses')
             .then(data => {
                 res.json(data);
             })
@@ -20,7 +22,7 @@ module.exports = {
     },
     getOne: async (req, res) => {
         try {
-            const item = await StudentModel.findById(req.params.id);
+            const item = await StudentModel.findById(req.params.id).populate('courses');;
             res.json(item);
         } catch (error) {
             res.status(500).json(error);
@@ -45,6 +47,29 @@ module.exports = {
             res.json(item);
         } catch (error) {
             res.status(500).json(error);
+        }
+    },
+    enrollStudentInCourse: async (req, res) => {
+        const { studentId, courseId } = req.body;
+        try {
+            const student = await StudentModel.findById(studentId);
+            if (!student) {
+                return res.status(404).json({ message: 'Student not found' });
+            }
+            
+            const course = await CourseModel.findById(courseId);
+            if (!course) {
+                return res.status(404).json({ message: 'Course not found' });
+            }
+            student.courses.push(courseId);
+            await student.save();
+            
+            course.students.push(studentId);
+            await course.save();
+            
+            res.json({ success: true, student, course });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
         }
     }
 }

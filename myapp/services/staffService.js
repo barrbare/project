@@ -2,7 +2,7 @@ const StaffModel = require('../models/staff');
 
 module.exports = {
     getAll: (req, res) => {
-        StudentModel.find({})
+        StaffModel.find({})
             .then(data => {
                 res.json(data);
             })
@@ -12,7 +12,7 @@ module.exports = {
     },
     add: async (req, res) => {
         try {
-            const savedItem = await new StudentModel(req.body).save();
+            const savedItem = await new StaffModel(req.body).save();
             res.json(savedItem);
         } catch (error) {
             res.status(500).json(error);
@@ -20,7 +20,7 @@ module.exports = {
     },
     getOne: async (req, res) => {
         try {
-            const item = await StudentModel.findById(req.params.id);
+            const item = await StaffModel.findById(req.params.id);
             res.json(item);
         } catch (error) {
             res.status(500).json(error);
@@ -28,7 +28,7 @@ module.exports = {
     },
     delete: async (req, res) => {
         try {
-            await StudentModel.deleteOne({ _id: req.params.id });
+            await StaffModel.deleteOne({ _id: req.params.id });
             res.json({ success: true });
         } catch (error) {
             res.status(500).json(error);
@@ -36,7 +36,7 @@ module.exports = {
     },
     update: async (req, res) => {
         try {
-            const item = await StudentModel.findByIdAndUpdate(req.params.id,
+            const item = await StaffModel.findByIdAndUpdate(req.params.id,
                 { $set: req.body },
                 {
                     new: true

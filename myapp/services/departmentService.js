@@ -3,12 +3,13 @@ const DepartmentModel = require('../models/department');
 module.exports = {
     getAll: (req, res) => {
         DepartmentModel.find({})
-            .then(data => {
-                res.json(data);
-            })
-            .catch(error => {
-                res.status(500).json(error);
-            })
+        .populate('headOfDepartment professors')
+        .then(data => {
+            res.json(data);
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        })
     },
     add: async (req, res) => {
         try {
@@ -20,7 +21,8 @@ module.exports = {
     },
     getOne: async (req, res) => {
         try {
-            const item = await DepartmentModel.findById(req.params.id);
+            const item = await DepartmentModel.findById(req.params.id)
+            .populate('headOfDepartment professors');
             res.json(item);
         } catch (error) {
             res.status(500).json(error);

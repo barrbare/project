@@ -5,6 +5,7 @@ const departmentSchema = new mongoose.Schema({
     code: { type: String, required: true, unique: true },
     headOfDepartment: { type: mongoose.Schema.Types.ObjectId, ref: 'Staff' },
     description: { type: String },
+    professors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Professor' }]
 }, {
     collection: 'departments',
     timestamps: true,

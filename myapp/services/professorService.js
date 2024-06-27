@@ -3,6 +3,7 @@ const ProfessorModel = require('../models/professor');
 module.exports = {
     getAll: (req, res) => {
         ProfessorModel.find({})
+            .populate('courses')
             .then(data => {
                 res.json(data);
             })
@@ -21,7 +22,8 @@ module.exports = {
     },
     getOne: async (req, res) => {
         try {
-            const professor = await ProfessorModel.findById(req.params.id);
+            const professor = await ProfessorModel.findById(req.params.id)
+            .populate('courses');
             res.json(professor);
         } catch (error) {
             res.status(500).json(error);
